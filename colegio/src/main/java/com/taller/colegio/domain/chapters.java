@@ -1,6 +1,6 @@
 package com.taller.colegio.domain;
 
-import java.sql.Timestamp;
+import java.security.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,46 +9,43 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "road_paths")
-public class road_paths {
-
+@Table(name = "chapters")
+public class chapters {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private boolean isactive;
+    private int numberChapter;
+    private int skill_id;
     private Timestamp created_at;
     private Timestamp updated_at;
-    private String image_path;
-
-    @NotNull
-    private String path_name;
-
-    @NotNull
     private String description;
+    private String chapter_summary;
 
-    public road_paths() {
+    public chapters() {
     }
 
-    public road_paths(Long id, boolean isactive, Timestamp created_at, Timestamp updated_at, String image_path,@NotNull String path_name, @NotNull String description) {
+    public chapters(Long id, int numberChapter, int skill_id, Timestamp created_at, Timestamp updated_at,String description, String chapter_summary) {
         this.id = id;
-        this.isactive = isactive;
+        this.numberChapter = numberChapter;
+        this.skill_id = skill_id;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.image_path = image_path;
-        this.path_name = path_name;
         this.description = description;
+        this.chapter_summary = chapter_summary;
     }
 
-    @ManyToMany(mappedBy = "road_paths")
+    @OneToMany(mappedBy = "chapters")
     private List<skills> skills = new ArrayList<>();
     
+    @ManyToOne
+    @JoinColumn(name = "subChapters_id")
+
     public Long getId() {
         return id;
     }
@@ -57,12 +54,20 @@ public class road_paths {
         this.id = id;
     }
 
-    public boolean isIsactive() {
-        return isactive;
+    public int getNumberChapter() {
+        return numberChapter;
     }
 
-    public void setIsactive(boolean isactive) {
-        this.isactive = isactive;
+    public void setNumberChapter(int numberChapter) {
+        this.numberChapter = numberChapter;
+    }
+
+    public int getSkill_id() {
+        return skill_id;
+    }
+
+    public void setSkill_id(int skill_id) {
+        this.skill_id = skill_id;
     }
 
     public Timestamp getCreated_at() {
@@ -81,28 +86,20 @@ public class road_paths {
         this.updated_at = updated_at;
     }
 
-    public String getImage_path() {
-        return image_path;
-    }
-
-    public void setImage_path(String image_path) {
-        this.image_path = image_path;
-    }
-
-    public String getPath_name() {
-        return path_name;
-    }
-
-    public void setPath_name(String path_name) {
-        this.path_name = path_name;
-    }
-
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getChapter_summary() {
+        return chapter_summary;
+    }
+
+    public void setChapter_summary(String chapter_summary) {
+        this.chapter_summary = chapter_summary;
     }
 
     public List<skills> getSkills() {
@@ -112,6 +109,7 @@ public class road_paths {
     public void setSkills(List<skills> skills) {
         this.skills = skills;
     }
+
     
 
 }
